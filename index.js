@@ -16,5 +16,5 @@ const bot = new builder.UniversalBot(connector);
 
 server.post('/api/messages', connector.listen());
 bot.dialog('/', [(session) => {
-	session.send('You said: %s.', session.message.text);
+	session.send('I said: %s.', session.message.text);
 }]);
