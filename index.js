@@ -15,9 +15,9 @@ const connector = new builder.ChatConnector({
 const bot = new builder.UniversalBot(connector);
 
 server.post('/api/messages', connector.listen());
-//bot.dialog('/', [(session) => {
-//	session.send('I said: %s.', session.message.text);
-//}]);
+bot.dialog('/', [(session) => {
+	session.send('I said: %s.', session.message.text);
+}]);
 
 //=========================================================
 // IntentDialogオブジェクトの用意
@@ -36,26 +36,26 @@ var intents = new builder.IntentDialog({
 //=========================================================
 
 // 初期ダイアログを、intentDialogとして使用する
-bot.dialog('/', intents);
-
-// インテントと処理の結びつけ
-intents
-.matches("会議", function (session, args) {
-
-		// インテントが 'intentA' だったときの処理をここに記述します。
-		bot.dialog('/', [(session) => {
-				session.send("会議しますか?%s.", session.message.text);
-				}]);
-
-		})
-.matches('会議', function (session, args) {
-
-		// インテントが 'intentB' だったときの処理をここに記述します。
-		bot.dialog('/', [(session) => {
-				session.send("会議する?%s.", session.message.text);
-				}]);
-
-		})
+//bot.dialog('/', intents);
+//
+//// インテントと処理の結びつけ
+//intents
+//.matches("会議", function (session, args) {
+//
+//		// インテントが 'intentA' だったときの処理をここに記述します。
+//		bot.dialog('/', [(session) => {
+//				session.send("会議しますか?%s.", session.message.text);
+//				}]);
+//
+//		})
+//.matches('会議', function (session, args) {
+//
+//		// インテントが 'intentB' だったときの処理をここに記述します。
+//		bot.dialog('/', [(session) => {
+//				session.send("会議する?%s.", session.message.text);
+//				}]);
+//
+//		})
 
 
 
