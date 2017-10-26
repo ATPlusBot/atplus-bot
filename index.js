@@ -50,7 +50,7 @@ intents
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) {
 		builder.DialogAction.beginDialog('/choise')
-		session.send("打ち合わせ調整しますか?%s.", session.message.text);
+		//session.send("打ち合わせ調整しますか?%s.", session.message.text);
 		//session.send("あなたが天気を知りたい場所は、" + area + "ですね！"); // この場合、「東京」が出力されます。
 		}
 
