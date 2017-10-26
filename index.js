@@ -14,7 +14,7 @@ const connector = new builder.ChatConnector({
 
 const bot = new builder.UniversalBot(connector);
 
-//server.post('/api/messages', connector.listen());
+server.post('/api/messages', connector.listen());
 //bot.dialog('/', [(session) => {
 //	session.send('I said: %s.', session.message.text);
 //}]);
