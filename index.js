@@ -8,8 +8,8 @@ const server = restify.createServer();
 server.listen(port);
 
 const connector = new builder.ChatConnector({
-	appId: process.env.MICROSOFT_APP_ID,
-	appPassword: process.env.MICROSOFT_APP_PASSWORD
+appId: process.env.MICROSOFT_APP_ID,
+appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
 const bot = new builder.UniversalBot(connector);
@@ -28,7 +28,7 @@ var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.micros
 
 // IntentDialogオブジェクトを作成
 var intents = new builder.IntentDialog({
-  recognizers: [recognizer]
+recognizers: [recognizer]
 });
 
 //=========================================================
@@ -40,16 +40,18 @@ bot.dialog('/', intents);
 
 // インテントと処理の結びつけ
 intents
-.matches("会議", function (session, args) {
+.matches('SetupMeeting', function (session, args) {
 
 		// インテントが 'intentA' だったときの処理をここに記述します。
-				session.send("会議しますか?%s.", session.message.text);
 
-		})
-.matches('会議', function (session, args) {
+		// EntityRecognizerを使うと、指定したエンティティの内容を抽出できます。
+		var meeting = builder.EntityRecognizer.findEntity(args.entities, '会議');
 
-		// インテントが 'intentB' だったときの処理をここに記述します。
-				session.send("会議する?%s.", session.message.text);
+		// 「場所」エンティティが認識できた場合の処理
+		if (meeting) {
+		session.send("会議しますか?%s.", session.message.text);
+		//session.send("あなたが天気を知りたい場所は、" + area + "ですね！"); // この場合、「東京」が出力されます。
+		}
 
 		})
 
