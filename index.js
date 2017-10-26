@@ -50,31 +50,29 @@ intents
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) 
 		{
-			session => {session.beginDialog("/ask");}.
-			(session,result) => {
-				if( results.response.entity ==='YES'){
-				session.send("打ち合わせ調整しますか?%s.", session.message.text);
-				}
-				else{
-				session.send("打ち合わせを調整しない?%s.", session.message.text);
-				}
-			}
+//			session => {session.beginDialog("/ask");}.
+//			(session,result) => {
+//				if( results.response.entity ==='YES'){
+//				session.send("打ち合わせ調整しますか?%s.", session.message.text);
+//				}
+//				else{
+//				session.send("打ち合わせを調整しない?%s.", session.message.text);
+//				}
+//			}
 
-
-
-		//session.send("打ち合わせ調整しますか?%s.", session.message.text);
-		//session.send("あなたが天気を知りたい場所は、" + area + "ですね！"); // この場合、「東京」が出力されます。
+		session.send("打ち合わせ調整しますか?%s.", session.message.text);
 		}
 
 		})
 
-// askダイアログ
-bot.dialog('/ask', [
-		session => {
-		builder.Prompts.choice(session, "こんにちは！何が知りたいですか?", "YES|NO");
-		},
-		(session, results) => {
-		// askダイアログを閉じ、ルートダイアログにユーザーからの返答データを渡します。
-		session.endDialogWithResult(results);
-		}
-]);
+// askダイアログ(動作しない) 
+//bot.dialog('/ask', [
+//		session => {
+//		builder.Prompts.choice(session, "こんにちは！何が知りたいですか?", "YES|NO");
+//		},
+//		(session, results) => {
+//		// askダイアログを閉じ、ルートダイアログにユーザーからの返答データを渡します。
+//		session.endDialogWithResult(results);
+//		}
+//]);
+
