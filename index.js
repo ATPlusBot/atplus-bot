@@ -48,25 +48,33 @@ intents
 		var meeting = builder.EntityRecognizer.findEntity(args.entities, '会議');
 
 		// 「場所」エンティティが認識できた場合の処理
-		if (meeting) {
-		builder.DialogAction.beginDialog('/choise')
+		if (meeting) 
+		{
+			session => {session.beginDialog("/ask");}.
+			(session,result) => {
+				if( results.response.entity ==='YES'){
+				session.send("打ち合わせ調整しますか?%s.", session.message.text);
+				}
+				else{
+				session.send("打ち合わせを調整しない?%s.", session.message.text);
+				}
+			}
+
+
+
 		//session.send("打ち合わせ調整しますか?%s.", session.message.text);
 		//session.send("あなたが天気を知りたい場所は、" + area + "ですね！"); // この場合、「東京」が出力されます。
 		}
 
 		})
 
-bot.add('/choice', [
-		function(session) {
-		builder.Prompts.choice(session,
-				"yes or no", "Yes|No|????");
+// askダイアログ
+bot.dialog('/ask', [
+		session => {
+		builder.Prompts.choice(session, "こんにちは！何が知りたいですか?", "YES|NO");
 		},
-		function(session, results) {
-		session.send("you like " + results.response.entity);
-		session.endDialog();
+		(session, results) => {
+		// askダイアログを閉じ、ルートダイアログにユーザーからの返答データを渡します。
+		session.endDialogWithResult(results);
 		}
 ]);
-
-
-
-
