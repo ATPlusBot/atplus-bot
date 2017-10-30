@@ -27,52 +27,97 @@ server.post('/api/messages', connector.listen());
 var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/8baa6be4-7058-4a67-987e-ba9fa4f49b85?subscription-key=d9b1431a2da143d7948d551952a757ef&verbose=true&timezoneOffset=0&q=');
 
 // IntentDialogオブジェクトを作成
-var intents = new builder.IntentDialog({
-recognizers: [recognizer]
+//var intents = new builder.IntentDialog({
+//recognizers: [recognizer]
+//});
+bot.recognizer(recognizer);
+
+bot.dialog('SetupMeeting', [
+		function (session, args, next) {
+				session.send("intent = SetupMeeting.");
+
+		var meeting = builder.EntityRecognizer.findEntity(args.entities, '会議');
+
+		// 「場所」エンティティが認識できた場合の処理
+		if (meeting) 
+		{
+		session.send("打ち合わせ調整しますか?.");
+		// city entity detected, continue to next step
+		session.dialogData.searchType = 'city';
+		next({ response: meeting.entity });
+		}
+		else {
+		// no entities detected, ask user for a destination
+		builder.Prompts.text(session, 'Please enter your destination');
+		}
+		},
+		function (session, results) {
+			var destination = results.response;
+
+			var message = 'Looking for hotels';
+			if (session.dialogData.searchType === 'airport') {
+				message += ' near %s airport...';
+			} else {
+				message += ' in %s...';
+			}
+
+			session.send(message, destination);
+
+			// Async search
+			Store
+				.SetupMeeting(destination)
+				.then(function (meetingSpace) {
+//						// args
+						session.send('I found %d hotels:', meetingSpace.length);
+//
+						var message = new builder.Message()
+						.attachmentLayout(builder.AttachmentLayout.carousel)
+
+						session.send(message);
+//
+//						// End
+						session.endDialog();
+						});
+		}
+]).triggerAction({
+matches: 'SetupMeeting',
+onInterrupted: function (session) {
+session.send('Please provide a destination');
+}
 });
 
 //=========================================================
 // 会話の処理
 //=========================================================
 
-// 初期ダイアログを、intentDialogとして使用する
-bot.dialog('/', intents);
+//初期ダイアログを、intentDialogとして使用する
+//bot.dialog('/', intents);
 
 // インテントと処理の結びつけ
-intents
-.matches('SetupMeeting', function (session, args) {
-
-		// インテントが 'intentA' だったときの処理をここに記述します。
-
-		// EntityRecognizerを使うと、指定したエンティティの内容を抽出できます。
-		var meeting = builder.EntityRecognizer.findEntity(args.entities, '会議');
-
-		// 「場所」エンティティが認識できた場合の処理
-		if (meeting) 
-		{
-//			session => {session.beginDialog("/ask");}.
-//			(session,result) => {
-//				if( results.response.entity ==='YES'){
-//				session.send("打ち合わせ調整しますか?%s.", session.message.text);
-//				}
-//				else{
-//				session.send("打ち合わせを調整しない?%s.", session.message.text);
-//				}
-//			}
-
-		session.send("打ち合わせ調整しますか?%s.", session.message.text);
-		}
-
-		})
-
-// askダイアログ(動作しない) 
-//bot.dialog('/ask', [
-//		session => {
-//		builder.Prompts.choice(session, "こんにちは！何が知りたいですか?", "YES|NO");
-//		},
-//		(session, results) => {
-//		// askダイアログを閉じ、ルートダイアログにユーザーからの返答データを渡します。
-//		session.endDialogWithResult(results);
+//intents
+//.matches('SetupMeeting', function (session, args) {
+//
+//		// インテントが 'intentA' だったときの処理をここに記述します。
+//
+//		// EntityRecognizerを使うと、指定したエンティティの内容を抽出できます。
+//		var meeting = builder.EntityRecognizer.findEntity(args.entities, '会議');
+//
+//		// 「場所」エンティティが認識できた場合の処理
+//		if (meeting) 
+//		{
+//		//			session => {session.beginDialog("/ask");}.
+//		//			(session,result) => {
+//		//				if( results.response.entity ==='YES'){
+//		//				session.send("打ち合わせ調整しますか?%s.", session.message.text);
+//		//				}
+//		//				else{
+//		//				session.send("打ち合わせを調整しない?%s.", session.message.text);
+//		//				}
+//		//			}
+//
+//		session.send("打ち合わせ調整しますか?%s.", session.message.text);
 //		}
-//]);
+//
+//})
+//		builder.Prompts.choice(session, "こんにちは！何が知りたいですか?", "YES|NO");
 
