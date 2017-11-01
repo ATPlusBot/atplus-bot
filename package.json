@@ -12,10 +12,13 @@
         "start": "node index.js"
     },
     "dependencies": {
+        "botauth": "^0.2.12",
         "botbuilder": "^3.11.0",
+        "passport-outlook": "^2.1.0",
         "restify": "^6.2.3"
     },
     "devDependencies": {
+        "dotenv": "^4.0.0",
         "eslint": "^4.9.0"
     }
 }
