@@ -2,37 +2,43 @@
 
 require('dotenv').config();
 const localPort = 3978;
+const botURL = 'https://atplus-bot.azurewebsites.net/';
 
+const fs = require('fs');
 const restify = require('restify');
 const builder = require('botbuilder');
 const botauth = require('botauth');
 const OutlookStrategy = require('passport-outlook').Strategy;
 
-const port = process.env.port || process.env.PORT || localPort;
+const https_options = {
+	key: fs.readFileSync('/home/chatbotdev/honjo/ssl/server.key'),
+	certificate: fs.readFileSync('/home/chatbotdev/honjo/ssl/server.crt')
+};
 
-const server = restify.createServer();
+const port = process.env.port || process.env.PORT || localPort;
+const server = restify.createServer(https_options);
 
 server.listen(port);
 
-/*
+
 const connector = new builder.ChatConnector({
 	appId: process.env.MICROSOFT_APP_ID,
 	appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
-*/
 
+/*
 const connector = new builder.ChatConnector({
 	appId: null,
 	appPassword: null
 });
-
+*/
 server.post('/api/messages', connector.listen());
 
 const bot = new builder.UniversalBot(connector);
 
 const botAuthenticator = new botauth.BotAuthenticator(server, bot, {
 	secret: process.env.MICROSOFT_APP_PASSWORD,
-	baseUrl: `https://localhost:${localPort}`
+	baseUrl: botURL
 });
 
 botAuthenticator.provider('outlook', (options) => {
@@ -51,6 +57,9 @@ botAuthenticator.provider('outlook', (options) => {
 });
 
 bot.dialog('/', [].concat(
+	(session, args, next) => {
+		next({});
+	},
 	botAuthenticator.authenticate('outlook'),
 	(session, results) => {
 		let user = auth.profile(session, 'outlook');
