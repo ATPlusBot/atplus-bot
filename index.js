@@ -4,16 +4,17 @@ require('dotenv').config();
 const localPort = 3978;
 const botURL = 'https://atplus-bot.azurewebsites.net/';
 
-const fs = require('fs');
+// const fs = require('fs');
 const restify = require('restify');
 const builder = require('botbuilder');
 const botauth = require('botauth');
 const OutlookStrategy = require('passport-outlook').Strategy;
-
+/*
 const https_options = {
 	key: fs.readFileSync('/home/chatbotdev/honjo/ssl/server.key'),
 	certificate: fs.readFileSync('/home/chatbotdev/honjo/ssl/server.crt')
 };
+*/
 
 const port = process.env.port || process.env.PORT || localPort;
 // const server = restify.createServer(https_options);
