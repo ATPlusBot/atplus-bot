@@ -60,6 +60,7 @@ botAuthenticator.provider('outlook', (options) => {
 
 bot.dialog('/', [].concat(
 	(session, args, next) => {
+		session.send('Hello!');
 		next({});
 	},
 	botAuthenticator.authenticate('outlook'),
