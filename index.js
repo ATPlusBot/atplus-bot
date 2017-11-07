@@ -16,7 +16,8 @@ const https_options = {
 };
 
 const port = process.env.port || process.env.PORT || localPort;
-const server = restify.createServer(https_options);
+// const server = restify.createServer(https_options);
+const server = restify.createServer();
 
 server.listen(port);
 
