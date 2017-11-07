@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config();
+//require('dotenv').config();
 const localPort = 3978;
 const botURL = 'https://atplus-bot.azurewebsites.net/';
 
