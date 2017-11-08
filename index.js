@@ -1,11 +1,10 @@
 'use strict';
 
-const OUTLOOK_CLIENT_ID = 'ghijkl';
-const OUTLOOK_CLIENT_SECRET = 'abcdef';
-
 //require('dotenv').config();
 const localPort = 3978;
 const botURL = 'https://atplus-bot.azurewebsites.net';
+const OUTLOOK_CLIENT_ID = process.env.MICROSOFT_APP_ID;
+const OUTLOOK_CLIENT_SECRET = process.env.MICROSOFT_APP_PASSWORD;
 
 // const fs = require('fs');
 const restify = require('restify');
@@ -22,6 +21,7 @@ const https_options = {
 const port = process.env.port || process.env.PORT || localPort;
 // const server = restify.createServer(https_options);
 const server = restify.createServer();
+server.use(restify.plugins.queryParser({mapParams: false}));
 
 const connector = new builder.ChatConnector({
 	appId: process.env.MICROSOFT_APP_ID,
