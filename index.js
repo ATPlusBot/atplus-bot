@@ -39,7 +39,7 @@ server.post('/api/messages', connector.listen());
 const bot = new builder.UniversalBot(connector);
 
 const botAuthenticator = new botauth.BotAuthenticator(server, bot, {
-	secret: process.env.MICROSOFT_APP_PASSWORD,
+	secret: 'something secret',
 	baseUrl: botURL
 });
 
