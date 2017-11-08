@@ -2,7 +2,7 @@
 
 //require('dotenv').config();
 const localPort = 3978;
-const botURL = 'https://atplus-bot.azurewebsites.net/';
+const botURL = 'https://atplus-bot.azurewebsites.net';
 
 // const fs = require('fs');
 const restify = require('restify');
