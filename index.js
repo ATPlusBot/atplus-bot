@@ -1,5 +1,8 @@
 'use strict';
 
+const OUTLOOK_CLIENT_ID = 'ghijkl';
+const OUTLOOK_CLIENT_SECRET = 'abcdef';
+
 //require('dotenv').config();
 const localPort = 3978;
 const botURL = 'https://atplus-bot.azurewebsites.net';
@@ -19,9 +22,6 @@ const https_options = {
 const port = process.env.port || process.env.PORT || localPort;
 // const server = restify.createServer(https_options);
 const server = restify.createServer();
-
-server.listen(port);
-
 
 const connector = new builder.ChatConnector({
 	appId: process.env.MICROSOFT_APP_ID,
@@ -46,8 +46,8 @@ const botAuthenticator = new botauth.BotAuthenticator(server, bot, {
 botAuthenticator.provider('outlook', (options) => {
 	return new OutlookStrategy(
 		{
-			clientID: process.env.MICROSOFT_APP_ID,
-			clientSecret: process.env.MICROSOFT_APP_PASSWORD,
+			clientID: OUTLOOK_CLIENT_ID,
+			clientSecret: OUTLOOK_CLIENT_SECRET,
 			callbackURL: options.callbackURL
 		},
 		(accessToken, refreshToken, profile, done) => {
@@ -77,4 +77,6 @@ bot.dialog('/', [
 	}
 ]);
 */
+
+server.listen(port);
 
