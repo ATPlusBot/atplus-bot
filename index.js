@@ -1,6 +1,5 @@
 'use strict';
 
-//require('dotenv').config();
 const localPort = 3978;
 const botURL = 'https://atplus-bot.azurewebsites.net';
 const OUTLOOK_CLIENT_ID = process.env.MICROSOFT_APP_ID;
@@ -45,6 +44,7 @@ botAuthenticator.provider('outlook', (options) => {
 	);
 });
 
+
 bot.dialog('/', [].concat(
 	(session, args, next) => {
 		session.send('Hello!');
@@ -53,7 +53,9 @@ bot.dialog('/', [].concat(
 	botAuthenticator.authenticate('outlook'),
 	(session, results) => {
 		let user = botAuthenticator.profile(session, 'outlook');
-		session.endDialog(`Welcome ${user.displayName}`);
+		session.send(`Welcome ${user.displayName}`);
+		session.send(`Token is ${user.accessToken}`);
+		session.endDialog('session end.');
 	}
 ));
 
