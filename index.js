@@ -54,7 +54,7 @@ bot.dialog('/', [].concat(
 	(session, results) => {
 		let user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
-		session.send(`Token is ${user.accessToken}`);
+		session.send(`User: ${JSON.stringify(user)}`);
 		session.endDialog('session end.');
 	}
 ));
