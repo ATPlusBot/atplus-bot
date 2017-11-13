@@ -56,7 +56,6 @@ bot.dialog('/', [].concat(
 	(session, results) => {
 		let user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
-		session.send(`User: ${JSON.stringify(user)}`);
 
 		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages',);
 
@@ -70,7 +69,7 @@ bot.dialog('/', [].concat(
 			if(err) {
 				session.send(`error: ${err}`);
 			} else {
-				session.send(`obj: ${JSON.stringify(obj)}`);
+				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
 			}
 
 			session.endDialog('session end.');
