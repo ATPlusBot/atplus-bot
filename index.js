@@ -7,7 +7,7 @@ const OUTLOOK_CLIENT_SECRET = process.env.MICROSOFT_APP_PASSWORD;
 
 const url = require('url');
 const restify = require('restify');
-const clientis = require('restify-clients');
+const clients = require('restify-clients');
 const builder = require('botbuilder');
 const botauth = require('botauth');
 const OutlookStrategy = require('passport-outlook').Strategy;
