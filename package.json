@@ -15,7 +15,8 @@
         "botauth": "^0.2.12",
         "botbuilder": "^3.11.0",
         "passport-outlook": "^2.1.0",
-        "restify": "^6.2.3"
+        "restify": "^6.2.3",
+        "restify-clients": "^1.5.2"
     },
     "devDependencies": {
         "eslint": "^4.9.0"

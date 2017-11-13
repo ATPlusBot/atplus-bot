@@ -5,7 +5,9 @@ const botURL = 'https://atplus-bot.azurewebsites.net';
 const OUTLOOK_CLIENT_ID = process.env.MICROSOFT_APP_ID;
 const OUTLOOK_CLIENT_SECRET = process.env.MICROSOFT_APP_PASSWORD;
 
+const url = require('url');
 const restify = require('restify');
+const clientis = require('restify-clients');
 const builder = require('botbuilder');
 const botauth = require('botauth');
 const OutlookStrategy = require('passport-outlook').Strategy;
@@ -55,7 +57,24 @@ bot.dialog('/', [].concat(
 		let user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
 		session.send(`User: ${JSON.stringify(user)}`);
-		session.endDialog('session end.');
+
+		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages',);
+
+		let client = clients.createJsonClient({
+			url: url.resolve(u, '/'),
+			headers: {
+				Authorization: `Bearer ${user.acessToken}` //actual spelling
+			}
+		});
+		client.get(u.path, (err, req, res, obj) => {
+			if(err) {
+				session.send(`error: ${err}`);
+			} else {
+				session.send(`obj: ${JSON.stringify(obj)}`);
+			}
+
+			session.endDialog('session end.');
+		});
 	}
 ));
 
