@@ -88,10 +88,7 @@ matches: 'SetupMeeting',
 //onInterrupted: function (session) {
 //session.send('Please provide a destination');
 //}
-onSelectAction: (session, args, next) => {
-// Add the help dialog to the top of the dialog stack 
-// (override the default behavior of replacing the stack)
-session.beginDialog(args.action, args);
+confirmPrompt: "This will cancel your request. Are you sure?"
 }
 
 });
