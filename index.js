@@ -89,8 +89,6 @@ matches: 'SetupMeeting',
 //session.send('Please provide a destination');
 //}
 confirmPrompt: "This will cancel your request. Are you sure?"
-}
-
 });
 
 // IntentDialogオブジェクトを作成
