@@ -34,8 +34,8 @@ bot.dialog('SetupMeeting', [
 		var meeting = builder.EntityRecognizer.findEntity(args.entities, '会議');
 		session.send("intent = SetupMeeting." );
 
-		var data = JSON.stringify(meeting);
-		session.send("data = %s.", data);
+		var data2 = JSON.stringify(meeting);
+		session.send("data = %s.", data2);
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) 
 		{
