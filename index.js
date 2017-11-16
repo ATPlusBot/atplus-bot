@@ -25,6 +25,15 @@ var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.micros
 
 bot.recognizer(recognizer);
 
+// Main menu
+var menuItems = { 
+	"人数調整": {
+item: "number"
+	},
+	"会議調整": {
+item: "meet"
+	},
+}
 bot.dialog('SetupMeeting', [
 		function (session, args, next) {
 
@@ -55,7 +64,7 @@ bot.dialog('SetupMeeting', [
 			} else {
 				session.send("やめておきましょう!!!");
 			}
-
+			builder.Prompts.choice(session, "Main Menu:", menuItems);
 //			session.send(message, destination);
 //
 //			// Async search
