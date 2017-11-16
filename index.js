@@ -28,14 +28,11 @@ bot.recognizer(recognizer);
 bot.dialog('SetupMeeting', [
 		function (session, args, next) {
 
-		var data = JSON.stringify(args);
-		session.send("data = %s.", data);
-
 		var meeting = builder.EntityRecognizer.findEntity(args.intent.entities, '会議');
 		session.send("intent = SetupMeeting." );
 
-		var data2 = JSON.stringify(meeting);
-		session.send("data = %s.", data2);
+		//var data2 = JSON.stringify(meeting);
+		//session.send("data = %s.", data2);
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) 
 		{
@@ -76,12 +73,18 @@ bot.dialog('SetupMeeting', [
 //						// End
 //						session.endDialog();
 //						});
+			session.endDialog("***************");
 		}
 ]).triggerAction({
 matches: 'SetupMeeting',
-onInterrupted: function (session) {
-session.send('Please provide a destination');
-}
+//onInterrupted: function (session) {
+//session.send('Please provide a destination');
+//}
+onSelectAction: (session, args, next) => {
+// Add the help dialog to the top of the dialog stack 
+// (override the default behavior of replacing the stack)
+session.beginDialog(args.action, args);
+
 });
 
 // IntentDialogオブジェクトを作成
