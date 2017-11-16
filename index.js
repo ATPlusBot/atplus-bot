@@ -27,16 +27,16 @@ var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.micros
 //
 //bot.dialog('SetupMeeting', [
 //		function (session, args, next) {
-//				session.send("intent = SetupMeeting.");
 //
 //		var meeting = builder.EntityRecognizer.findEntity(args.entities, '会議');
+//		session.send("intent = SetupMeeting. meeting = %d ", meeting);
 //
 //		// 「場所」エンティティが認識できた場合の処理
 //		if (meeting) 
 //		{
 //		session.send("打ち合わせ調整しますか?.");
 //		// city entity detected, continue to next step
-//		session.dialogData.searchType = 'city';
+//		session.dialogData.searchType = 'meeting';
 //		next({ response: meeting.entity });
 //		}
 //		else {
@@ -48,7 +48,7 @@ var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.micros
 //			var destination = results.response;
 //
 //			var message = 'Looking for hotels';
-//			if (session.dialogData.searchType === 'airport') {
+//			if (session.dialogData.searchType === 'meeting') {
 //				message += ' near %s airport...';
 //			} else {
 //				message += ' in %s...';
