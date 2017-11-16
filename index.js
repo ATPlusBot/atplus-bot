@@ -73,7 +73,6 @@ bot.dialog('SetupMeeting', [
 //						// End
 //						session.endDialog();
 //						});
-			session.endDialog("***************");
 		}
 ]).triggerAction({
 matches: 'SetupMeeting',
