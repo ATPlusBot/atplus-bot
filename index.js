@@ -103,19 +103,9 @@ intents
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) 
 		{
-		//			session => {session.beginDialog("/ask");}.
-		//			(session,result) => {
-		//				if( results.response.entity ==='YES'){
-		//				session.send("打ち合わせ調整しますか?%s.", session.message.text);
-		//				}
-		//				else{
-		//				session.send("打ち合わせを調整しない?%s.", session.message.text);
-		//				}
-		//			}
-
+		session.send("打ち合わせ調整しますか?%s.", session.message.text);
 		session.send("打ち合わせ調整しますか?%s.", session.message.text);
 		}
 
 })
-//		builder.Prompts.choice(session, "こんにちは！何が知りたいですか?", "YES|NO");
 
