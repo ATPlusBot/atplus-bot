@@ -100,7 +100,7 @@ intents
 		// EntityRecognizerを使うと、指定したエンティティの内容を抽出できます。
 		var meeting = builder.EntityRecognizer.findEntity(args.entities, '会議');
 
-		//session.send("meeting = %d.", meeting);
+		session.send("meeting = %s.", meeting);
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) 
 		{
