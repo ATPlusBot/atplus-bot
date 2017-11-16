@@ -84,6 +84,7 @@ onSelectAction: (session, args, next) => {
 // Add the help dialog to the top of the dialog stack 
 // (override the default behavior of replacing the stack)
 session.beginDialog(args.action, args);
+}
 
 });
 
