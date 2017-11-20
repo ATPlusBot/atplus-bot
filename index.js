@@ -35,7 +35,7 @@ item: "meet"
 	},
 }
 bot.dialog('SetupMeeting', [
-		function (session, args, next) {
+		function (session, args/*, next*/) {
 
 		var meeting = builder.EntityRecognizer.findEntity(args.intent.entities, '会議');
 		session.send("intent = SetupMeeting." );
@@ -48,7 +48,7 @@ bot.dialog('SetupMeeting', [
 		session.send("打ち合わせ調整しますか?.");
 		// city entity detected, continue to next step
 		session.dialogData.searchType = 'meeting';
-		next({ response: meeting.entity });
+		//next({ response: meeting.entity });
 		}
 		else {
 		// no entities detected, ask user for a destination
@@ -65,38 +65,23 @@ bot.dialog('SetupMeeting', [
 				session.send("やめておきましょう!!!");
 			}
 			builder.Prompts.choice(session, "Main Menu:", menuItems);
-//			session.send(message, destination);
-//
-//			// Async search
-//			Store
-//				.SetupMeeting(destination)
-//				.then(function (meetingSpace) {
-//						// args
-//						session.send('I found %d hotels:', meetingSpace.length);
-//
-//						var message = new builder.Message()
-//						.attachmentLayout(builder.AttachmentLayout.carousel)
-//
-//						session.send(message);
-//
-//						// End
-//						session.endDialog();
-//						});
+			// End
+			session.endDialog();
 		}
-]).triggerAction({
-matches: 'SetupMeeting',
-//onInterrupted: function (session) {
-//session.send('Please provide a destination');
-//}
-confirmPrompt: "This will cancel your request. Are you sure?"
-});
+])
+//.triggerAction({
+//matches: 'SetupMeeting',
+	////onInterrupted: function (session) {
+	////session.send('Please provide a destination');
+	////}
+//confirmPrompt: "This will cancel your request. Are you sure?"
+//});
 
 // IntentDialogオブジェクトを作成
-var intents = new builder.IntentDialog({
-recognizers: [recognizer]
-});
+//var intents = new builder.IntentDialog({
+//recognizers: [recognizer]
+//});
 
-//=========================================================
 // 会話の処理
 //=========================================================
 
