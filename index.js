@@ -74,6 +74,7 @@ matches: 'SetupMeeting',
   ////session.send('Please provide a destination');
   ////}
 confirmPrompt: "This will cancel your request. Are you sure?"
+next({ response: meeting.entity });
 });
 
 // IntentDialogオブジェクトを作成
