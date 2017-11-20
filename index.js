@@ -89,26 +89,16 @@ bot.dialog('MeetingSpace', [
 		var place = builder.EntityRecognizer.findEntity(args.intent.entities, '場所');
 		session.send("intent = MeetingSpace." );
 
-		var data = JSON.stringify(place);
-		session.send("data = %s.", data);
-
 		// 「場所」エンティティが認識できた場合の処理
 		if (place) 
 		{
-		session.send("場所は %d にしますか?.",data.entity);
+		session.send("場所は %d にしますか?.",place.entity);
 		// city entity detected, continue to next step
 		session.dialogData.searchType = 'space';
 		//next({ response: meeting.entity });
 		}
-		else {
-		if(session.dialogData.searchType === 'meeting'){
-		next({ response: meeting.entity });
-		}
-		else{
-			// no entities detected, ask user for a destination
-			builder.Prompts.text(session, 'Please enter your destination');
-		}
-		}
+		// End
+		session.endDialog();
 		},
 ]) .triggerAction({
 matches: 'MeetingSpace',
