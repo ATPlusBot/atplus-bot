@@ -51,11 +51,15 @@ bot.dialog('SetupMeeting', [
 		//next({ response: meeting.entity });
 		}
 		else {
-			if(session.dialogData.searchType === 'meeting'){
-			next({ response: meeting.entity });
-			}
+		var data = JSON.stringify(meeting);
+		session.send("data = %s.", data);
+		if(session.dialogData.searchType === 'meeting'){
+		next({ response: meeting.entity });
+		}
+		else{
 			// no entities detected, ask user for a destination
 			builder.Prompts.text(session, 'Please enter your destination');
+		}
 		}
 		},
 		function (session, results) {
@@ -73,10 +77,10 @@ bot.dialog('SetupMeeting', [
 		}
 ]) .triggerAction({
 matches: 'SetupMeeting',
-  ////onInterrupted: function (session) {
-  ////session.send('Please provide a destination');
-  ////}
-  //confirmPrompt: "This will cancel your request. Are you sure?"
+////onInterrupted: function (session) {
+////session.send('Please provide a destination');
+////}
+//confirmPrompt: "This will cancel your request. Are you sure?"
 });
 
 // IntentDialogオブジェクトを作成
