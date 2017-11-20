@@ -35,7 +35,7 @@ item: "meet"
 	},
 }
 bot.dialog('SetupMeeting', [
-		function (session, args/*, next*/) {
+		function (session, args, next) {
 
 		var meeting = builder.EntityRecognizer.findEntity(args.intent.entities, '会議');
 		session.send("intent = SetupMeeting." );
