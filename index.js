@@ -68,14 +68,13 @@ bot.dialog('SetupMeeting', [
 			// End
 			session.endDialog();
 		}
-])
-//.triggerAction({
-//matches: 'SetupMeeting',
-	////onInterrupted: function (session) {
-	////session.send('Please provide a destination');
-	////}
-//confirmPrompt: "This will cancel your request. Are you sure?"
-//});
+]) .triggerAction({
+matches: 'SetupMeeting',
+  ////onInterrupted: function (session) {
+  ////session.send('Please provide a destination');
+  ////}
+confirmPrompt: "This will cancel your request. Are you sure?"
+});
 
 // IntentDialogオブジェクトを作成
 //var intents = new builder.IntentDialog({
