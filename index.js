@@ -48,8 +48,6 @@ bot.dialog('SetupMeeting', [
 		session.send("打ち合わせ調整しますか?.");
 		// city entity detected, continue to next step
 		session.dialogData.searchType = 'meeting';
-		// End
-		session.endDialog();
 		//next({ response: meeting.entity });
 		}
 		else {
@@ -75,7 +73,7 @@ matches: 'SetupMeeting',
   ////onInterrupted: function (session) {
   ////session.send('Please provide a destination');
   ////}
-confirmPrompt: "This will cancel your request. Are you sure?"
+  //confirmPrompt: "This will cancel your request. Are you sure?"
 });
 
 // IntentDialogオブジェクトを作成
