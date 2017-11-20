@@ -93,9 +93,9 @@ bot.dialog('MeetingSpace', [
 		session.send("data = %s.", data);
 
 		// 「場所」エンティティが認識できた場合の処理
-		if (meeting) 
+		if (place) 
 		{
-		session.send("場所はそこにしますか?.");
+		session.send("場所は %d にしますか?.",data.entity);
 		// city entity detected, continue to next step
 		session.dialogData.searchType = 'space';
 		//next({ response: meeting.entity });
