@@ -51,8 +51,11 @@ bot.dialog('SetupMeeting', [
 		//next({ response: meeting.entity });
 		}
 		else {
-		// no entities detected, ask user for a destination
-		builder.Prompts.text(session, 'Please enter your destination');
+			if(session.dialogData.searchType === 'meeting'){
+			next({ response: meeting.entity });
+			}
+			// no entities detected, ask user for a destination
+			builder.Prompts.text(session, 'Please enter your destination');
 		}
 		},
 		function (session, results) {
