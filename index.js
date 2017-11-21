@@ -69,6 +69,8 @@ bot.dialog('SetupMeeting', [
 		}
 		},
 		function (session, results) {
+			var data2 = JSON.stringify(results);
+			session.send("results= %s.", data2);
 			var destination = results.response;
 
 			if (meetingSts === 'meeting') {
@@ -77,7 +79,6 @@ bot.dialog('SetupMeeting', [
 			} else {
 				session.send("やめておきましょう!!!");
 			}
-			builder.Prompts.choice(session, "Main Menu:", menuItems);
 			// End
 			session.endDialog();
 		}
