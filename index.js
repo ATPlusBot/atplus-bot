@@ -59,13 +59,7 @@ bot.dialog('SetupMeeting', [
 		//next({ response: meeting.entity });
 		}
 		else {
-		if(meetingSts === 'meeting'){
-		next({ response: meeting.entity });
-		}
-		else{
-			// no entities detected, ask user for a destination
-			builder.Prompts.text(session, 'Please enter your destination');
-		}
+		session.send("error.");
 		}
 		},
 		function (session, results) {
@@ -73,14 +67,13 @@ bot.dialog('SetupMeeting', [
 			session.send("results= %s.", data2);
 			var destination = results.response;
 
-			if (meetingSts === 'meeting') {
+			if ( results.index === 1 ){{
 				session.send("調整しましょう!!!");
-				meeting = 'non'
 			} else {
 				session.send("やめておきましょう!!!");
 			}
 			// End
-			session.endDialog();
+			//session.endDialog();
 		}
 ]) .triggerAction({
 matches: 'SetupMeeting',
