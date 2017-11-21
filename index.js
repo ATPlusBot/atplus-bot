@@ -65,15 +65,14 @@ bot.dialog('SetupMeeting', [
 		function (session, results) {
 			var data2 = JSON.stringify(results);
 			session.send("results= %s.", data2);
-			var destination = results.response;
 
-			if ( results.index == 0 ){
-				session.send("調整しましょう!!!%d", results.index);
+			if ( results.response.index == 0 ){
+				session.send("調整しましょう!!!%d", results.response.index);
 			} else {
-				session.send("やめておきましょう!!!%d", results.index);
+				session.send("やめておきましょう!!!%d", results.response.index);
 			}
 			// End
-			//session.endDialog();
+			session.endDialog();
 		}
 ]) .triggerAction({
 matches: 'SetupMeeting',
