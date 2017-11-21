@@ -56,7 +56,7 @@ bot.dialog('SetupMeeting', [
 		//next({ response: meeting.entity });
 		}
 		else {
-		if(meeting === 'meeting'){
+		if(meetingSts === 'meeting'){
 		next({ response: meeting.entity });
 		}
 		else{
@@ -68,7 +68,7 @@ bot.dialog('SetupMeeting', [
 		function (session, results) {
 			var destination = results.response;
 
-			if (meeting === 'meeting') {
+			if (meetingSts === 'meeting') {
 				session.send("調整しましょう!!!");
 				meeting = 'non'
 			} else {
