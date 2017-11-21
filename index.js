@@ -67,10 +67,10 @@ bot.dialog('SetupMeeting', [
 			session.send("results= %s.", data2);
 			var destination = results.response;
 
-			if ( results.index === 0 ){
-				session.send("調整しましょう!!!");
+			if ( results.index == 0 ){
+				session.send("調整しましょう!!!%d", results.index);
 			} else {
-				session.send("やめておきましょう!!!");
+				session.send("やめておきましょう!!!%d", results.index);
 			}
 			// End
 			//session.endDialog();
