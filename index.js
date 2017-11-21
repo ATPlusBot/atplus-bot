@@ -68,6 +68,7 @@ bot.dialog('SetupMeeting', [
 
 			if ( results.response.index == 0 ){
 				session.send("調整しましょう!!!%d", results.response.index);
+				session.send("場所はどこにしますか？%d", results.response.index);
 			} else {
 				session.send("やめておきましょう!!!%d", results.response.index);
 			}
@@ -88,19 +89,25 @@ bot.dialog('MeetingSpace', [
 		var place = builder.EntityRecognizer.findEntity(args.intent.entities, '場所');
 		session.send("intent = MeetingSpace." );
 
-		var data = JSON.stringify(place);
-		session.send("data = %s.", data);
 		// 「場所」エンティティが認識できた場合の処理
 		if (place) 
 		{
-		session.send("場所は %s にしますか?.",place.entity);
+		session.send("場所は %s ですね？.",place.entity);
+		builder.Prompts.choice(session, "Main Menu:", menuItems);
 		// city entity detected, continue to next step
 		session.dialogData.searchType = 'space';
 		//next({ response: meeting.entity });
 		}
-		// End
-		session.endDialog();
 		},
+		function (session, results) {
+			if ( results.response.index == 0 ){
+				session.send("人数は?%d", results.response.index);
+			} else {
+				session.send("調整をおわります!!!%d", results.response.index);
+			}
+			// End
+			session.endDialog();
+		}
 ]) .triggerAction({
 matches: 'MeetingSpace',
 });
