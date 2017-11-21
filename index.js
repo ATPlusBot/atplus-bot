@@ -25,6 +25,11 @@ var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.micros
 
 bot.recognizer(recognizer);
 
+//状態
+var meetingSts;
+
+
+
 // Main menu
 var menuItems = { 
 	"人数調整": {
@@ -47,13 +52,11 @@ bot.dialog('SetupMeeting', [
 		{
 		session.send("打ち合わせ調整しますか?.");
 		// city entity detected, continue to next step
-		session.dialogData.searchType = 'meeting';
+		meetingSts = 'meeting';
 		//next({ response: meeting.entity });
 		}
 		else {
-		var data = JSON.stringify(meeting);
-		session.send("data = %s.", data);
-		if(session.dialogData.searchType === 'meeting'){
+		if(meeting === 'meeting'){
 		next({ response: meeting.entity });
 		}
 		else{
@@ -65,9 +68,9 @@ bot.dialog('SetupMeeting', [
 		function (session, results) {
 			var destination = results.response;
 
-			var message = 'Looking for hotels';
-			if (session.dialogData.searchType === 'meeting') {
+			if (meeting === 'meeting') {
 				session.send("調整しましょう!!!");
+				meeting = 'non'
 			} else {
 				session.send("やめておきましょう!!!");
 			}
@@ -89,6 +92,8 @@ bot.dialog('MeetingSpace', [
 		var place = builder.EntityRecognizer.findEntity(args.intent.entities, '場所');
 		session.send("intent = MeetingSpace." );
 
+		var data = JSON.stringify(place);
+		session.send("data = %s.", data);
 		// 「場所」エンティティが認識できた場合の処理
 		if (place) 
 		{
