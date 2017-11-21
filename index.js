@@ -67,10 +67,10 @@ bot.dialog('SetupMeeting', [
 			session.send("results= %s.", data2);
 
 			if ( results.response == true ){
-				session.send("調整しましょう!!!%d", results.response);
-				session.send("場所はどこにしますか？%d", results.response);
+				session.send("調整しましょう!!!");
+				session.send("場所はどこにしますか？");
 			} else {
-				session.send("やめておきましょう!!!%d", results.response);
+				session.send("やめておきましょう!!!");
 			}
 /*			//choiceを使用した場合
 			if ( results.response.index == 0 ){
@@ -109,7 +109,25 @@ bot.dialog('MeetingSpace', [
 		},
 		function (session, results) {
 			if ( results.response.index == 0 ){
-				session.send("人数は?%d", results.response.index);
+				builder.Prompts.number(session, "人数は?");
+			} else {
+				session.send("調整をおわります!!!%d", results.response.index);
+			}
+			// End
+			//session.endDialog();
+		},
+		function (session, results) {
+			if ( results.response.index == 0 ){
+				builder.Prompts.text(session, "誰が参加しますか?");
+			} else {
+				session.send("調整をおわります!!!%d", results.response.index);
+			}
+			// End
+			session.endDialog();
+		},
+		function (session, results) {
+			if ( results.response.index == 0 ){
+				session.send("参加者は、 %s. ですね?", results.response);
 			} else {
 				session.send("調整をおわります!!!%d", results.response.index);
 			}
