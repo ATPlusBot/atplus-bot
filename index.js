@@ -117,20 +117,16 @@ bot.dialog('MeetingSpace', [
 			//session.endDialog();
 		},
 		function (session, results) {
-			if ( results.response.index == 0 ){
-				builder.Prompts.text(session, "誰が参加しますか?");
+			if ( results.response != 0 ){
+				builder.Prompts.text(session, "%名はどなたが参加しますか?",results.response);
 			} else {
-				session.send("調整をおわります!!!%d", results.response.index);
+				session.send("調整をおわります!!!%d", results.response);
 			}
 			// End
 			session.endDialog();
 		},
 		function (session, results) {
-			if ( results.response.index == 0 ){
-				session.send("参加者は、 %s. ですね?", results.response);
-			} else {
-				session.send("調整をおわります!!!%d", results.response.index);
-			}
+			session.send("参加者は、 %s. ですね?", results.response);
 			// End
 			session.endDialog();
 		}
