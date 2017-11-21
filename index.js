@@ -120,7 +120,7 @@ bot.dialog('MeetingSpace', [
 			var data2 = JSON.stringify(results);
 			session.send("data = %s.", data2);
 			if ( results.response != 0 ){
-				builder.Prompts.text(session, "%d 名はどなたが参加しますか?",results.response);
+				builder.Prompts.text(session, " %d %s 名はどなたが参加しますか?", results.response, results.response);
 			} else {
 				session.send("調整をおわります!!!%d", results.response);
 			}
