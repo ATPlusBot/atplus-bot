@@ -117,7 +117,7 @@ bot.dialog('MeetingSpace', [
 			//session.endDialog();
 		},
 		function (session, results) {
-			var data2 = JSON.stringify(args);
+			var data2 = JSON.stringify(results);
 			session.send("data = %s.", data2);
 			if ( results.response != 0 ){
 				builder.Prompts.text(session, "%d 名はどなたが参加しますか?",results.response);
