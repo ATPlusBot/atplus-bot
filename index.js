@@ -53,7 +53,7 @@ bot.dialog('SetupMeeting', [
 		if (meeting) 
 		{
 		session.send("打ち合わせ調整しますか?.");
-		builder.Prompts.confirm(session, "Select Menu:");
+		builder.Prompts.confirm(session, "Select Menu:","はい|いいえ");
 		//builder.Prompts.choice(session, "Select Menu:", menuItems);
 		// city entity detected, continue to next step
 		meetingSts = 'meeting';
