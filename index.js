@@ -52,9 +52,8 @@ bot.dialog('SetupMeeting', [
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) 
 		{
-		session.send("打ち合わせ調整しますか?.");
-		builder.Prompts.confirm(session, "Yes or No");
-		//builder.Prompts.choice(session, "Select Menu:", menuItems);
+		builder.Prompts.confirm(session, "打ち合わせ調整しますか?(yes or no)");
+		//builder.Prompts.choice(session, "打ち合わせ調整しますか?", menuItems);
 		// city entity detected, continue to next step
 		meetingSts = 'meeting';
 		//next({ response: meeting.entity });
@@ -67,12 +66,20 @@ bot.dialog('SetupMeeting', [
 			var data2 = JSON.stringify(results);
 			session.send("results= %s.", data2);
 
+			if ( results.response == true ){
+				session.send("調整しましょう!!!%d", results.response.index);
+				session.send("場所はどこにしますか？%d", results.response.index);
+			} else {
+				session.send("やめておきましょう!!!%d", results.response.index);
+			}
+/*			//choiceを使用した場合
 			if ( results.response.index == 0 ){
 				session.send("調整しましょう!!!%d", results.response.index);
 				session.send("場所はどこにしますか？%d", results.response.index);
 			} else {
 				session.send("やめておきましょう!!!%d", results.response.index);
 			}
+*/
 			// End
 			session.endDialog();
 		}
