@@ -47,10 +47,8 @@ bot.dialog('SetupMeeting', [
 
 		var data = JSON.stringify(session);
 		session.send("data = %s.", data);
-		data = JSON.stringify(args);
-		session.send("data = %s.", data);
-		data = JSON.stringify(next);
-		session.send("data = %s.", data);
+		var data2 = JSON.stringify(args);
+		session.send("data = %s.", data2);
 		//var data2 = JSON.stringify(meeting);
 		//session.send("data = %s.", data2);
 		// 「場所」エンティティが認識できた場合の処理
