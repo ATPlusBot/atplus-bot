@@ -45,8 +45,6 @@ bot.dialog('SetupMeeting', [
 		var meeting = builder.EntityRecognizer.findEntity(args.intent.entities, '会議');
 		session.send("intent = SetupMeeting." );
 
-		var data = JSON.stringify(session);
-		session.send("data = %s.", data);
 		var data2 = JSON.stringify(args);
 		session.send("data = %s.", data2);
 		//var data2 = JSON.stringify(meeting);
