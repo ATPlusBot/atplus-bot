@@ -67,10 +67,10 @@ bot.dialog('SetupMeeting', [
 			session.send("results= %s.", data2);
 
 			if ( results.response == true ){
-				session.send("調整しましょう!!!%d", results.response.index);
-				session.send("場所はどこにしますか？%d", results.response.index);
+				session.send("調整しましょう!!!%d", results.response);
+				session.send("場所はどこにしますか？%d", results.response);
 			} else {
-				session.send("やめておきましょう!!!%d", results.response.index);
+				session.send("やめておきましょう!!!%d", results.response);
 			}
 /*			//choiceを使用した場合
 			if ( results.response.index == 0 ){
