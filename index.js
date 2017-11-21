@@ -32,11 +32,11 @@ var meetingSts;
 
 // Main menu
 var menuItems = { 
-	"人数調整": {
-item: "number"
+	"はい": {
+item: "yes"
 	},
-	"会議調整": {
-item: "meet"
+	"いいえ": {
+item: "no"
 	},
 }
 bot.dialog('SetupMeeting', [
@@ -45,12 +45,19 @@ bot.dialog('SetupMeeting', [
 		var meeting = builder.EntityRecognizer.findEntity(args.intent.entities, '会議');
 		session.send("intent = SetupMeeting." );
 
+		var data = JSON.stringify(session);
+		session.send("data = %s.", data);
+		data = JSON.stringify(args);
+		session.send("data = %s.", data);
+		data = JSON.stringify(next);
+		session.send("data = %s.", data);
 		//var data2 = JSON.stringify(meeting);
 		//session.send("data = %s.", data2);
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) 
 		{
 		session.send("打ち合わせ調整しますか?.");
+		builder.Prompts.choice(session, "Main Menu:", menuItems);
 		// city entity detected, continue to next step
 		meetingSts = 'meeting';
 		//next({ response: meeting.entity });
