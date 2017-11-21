@@ -53,7 +53,8 @@ bot.dialog('SetupMeeting', [
 		if (meeting) 
 		{
 		session.send("打ち合わせ調整しますか?.");
-		builder.Prompts.choice(session, "Main Menu:", menuItems);
+		builder.Prompts.confirm(session, "Select Menu:");
+		//builder.Prompts.choice(session, "Select Menu:", menuItems);
 		// city entity detected, continue to next step
 		meetingSts = 'meeting';
 		//next({ response: meeting.entity });
@@ -93,7 +94,7 @@ bot.dialog('MeetingSpace', [
 		if (place) 
 		{
 		session.send("場所は %s ですね？.",place.entity);
-		builder.Prompts.choice(session, "Main Menu:", menuItems);
+		builder.Prompts.choice(session, "Select Menu:", menuItems);
 		// city entity detected, continue to next step
 		session.dialogData.searchType = 'space';
 		//next({ response: meeting.entity });
