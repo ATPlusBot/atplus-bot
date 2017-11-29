@@ -12,7 +12,7 @@
         "start": "node index.js"
     },
     "dependencies": {
-        "botauth": "^0.2.12",
+        "botauth": "git+https://github.com/ATPlusBot/botauth#master",
         "botbuilder": "^3.11.0",
         "passport-outlook": "^2.1.0",
         "restify": "^6.2.3",

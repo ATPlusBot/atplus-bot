@@ -28,7 +28,13 @@ const bot = new builder.UniversalBot(connector);
 
 const botAuthenticator = new botauth.BotAuthenticator(server, bot, {
 	secret: 'something secret',
-	baseUrl: botURL
+	baseUrl: botURL,
+	scope: [
+		'openid',
+		'profile',
+		'offline_access',
+		'https://outlook.office.com/Mail.Read'
+	]
 });
 
 botAuthenticator.provider('outlook', (options) => {
@@ -53,11 +59,11 @@ bot.dialog('/', [].concat(
 		next({});
 	},
 	botAuthenticator.authenticate('outlook'),
-	(session, results) => {
+	(session) => {
 		let user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
 
-		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages',);
+		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
 
 		let client = clients.createJsonClient({
 			url: url.resolve(u, '/'),
@@ -78,4 +84,3 @@ bot.dialog('/', [].concat(
 ));
 
 server.listen(port);
-
