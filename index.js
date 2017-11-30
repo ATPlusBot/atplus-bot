@@ -103,7 +103,7 @@ item: "no"
 	},
 }
 bot.dialog('SetupMeeting', [].concat(
-	function (session, args, next) {
+/*	function (session, args, next) {
 
 		var meeting = builder.EntityRecognizer.findEntity(args.intent.entities, '会議');
 		session.send("intent = SetupMeeting." );
@@ -118,7 +118,7 @@ bot.dialog('SetupMeeting', [].concat(
 			session.send("error.");
 		}
 	},
-	function (session, results) {
+*/	function (session, results,next) {
 		var data2 = JSON.stringify(results);
 		session.send("results= %s.", data2);
 
@@ -129,7 +129,6 @@ bot.dialog('SetupMeeting', [].concat(
 			session.send("やめておきましょう!!!");
 		}
 	},
-	function (session, results) {
 	botAuthenticator.authenticate('outlook'),
 	(session) => {
 		let user = botAuthenticator.profile(session, 'outlook');
@@ -152,7 +151,6 @@ bot.dialog('SetupMeeting', [].concat(
 			}
 				session.endDialog('session end.');
 		});
-	}
 	}
 )).triggerAction({
 matches: 'SetupMeeting',
