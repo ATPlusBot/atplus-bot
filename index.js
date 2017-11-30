@@ -123,26 +123,6 @@ bot.dialog('SetupMeeting', [
 
 			if ( results.response == true ){
 				session.send("調整しましょう!!!");
-				session.send("場所はどこにしますか？");
-			} else {
-				session.send("やめておきましょう!!!");
-			}
-/*			//choiceを使用した場合
-			if ( results.response.index == 0 ){
-				session.send("調整しましょう!!!%d", results.response.index);
-				session.send("場所はどこにしますか？%d", results.response.index);
-			} else {
-				session.send("やめておきましょう!!!%d", results.response.index);
-			}
-*/
-			// End
-			session.endDialog();
-		}
-].concat(
-	(session, args, next) => {
-		session.send('Hello!');
-		next({});
-	},
 	botAuthenticator.authenticate('outlook'),
 	(session) => {
 		let user = botAuthenticator.profile(session, 'outlook');
@@ -166,7 +146,22 @@ bot.dialog('SetupMeeting', [
 			session.endDialog('session end.');
 		});
 	}
-)) .triggerAction({
+				session.send("場所はどこにしますか？");
+			} else {
+				session.send("やめておきましょう!!!");
+			}
+/*			//choiceを使用した場合
+			if ( results.response.index == 0 ){
+				session.send("調整しましょう!!!%d", results.response.index);
+				session.send("場所はどこにしますか？%d", results.response.index);
+			} else {
+				session.send("やめておきましょう!!!%d", results.response.index);
+			}
+*/
+			// End
+			session.endDialog();
+		}
+]) .triggerAction({
 matches: 'SetupMeeting',
 });
 
