@@ -50,6 +50,36 @@ botAuthenticator.provider('outlook', (options) => {
 	);
 });
 
+bot.dialog('/', [].concat(
+	(session, args, next) => {
+		session.send('Hello!');
+		next({});
+	},
+	botAuthenticator.authenticate('outlook'),
+	(session) => {
+		let user = botAuthenticator.profile(session, 'outlook');
+		session.send(`Welcome ${user.displayName}`);
+
+		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
+
+		let client = clients.createJsonClient({
+			url: url.resolve(u, '/'),
+			headers: {
+				Authorization: `Bearer ${user.acessToken}` //actual spelling
+			}
+		});
+		client.get(u.path, (err, req, res, obj) => {
+			if(err) {
+				session.send(`error: ${err}`);
+			} else {
+				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
+			}
+
+			session.endDialog('session end.');
+		});
+	}
+));
+
 server.listen(port);
 
 //=========================================================
@@ -108,7 +138,35 @@ bot.dialog('SetupMeeting', [
 			// End
 			session.endDialog();
 		}
-]) .triggerAction({
+].concat(
+	(session, args, next) => {
+		session.send('Hello!');
+		next({});
+	},
+	botAuthenticator.authenticate('outlook'),
+	(session) => {
+		let user = botAuthenticator.profile(session, 'outlook');
+		session.send(`Welcome ${user.displayName}`);
+
+		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
+
+		let client = clients.createJsonClient({
+			url: url.resolve(u, '/'),
+			headers: {
+				Authorization: `Bearer ${user.acessToken}` //actual spelling
+			}
+		});
+		client.get(u.path, (err, req, res, obj) => {
+			if(err) {
+				session.send(`error: ${err}`);
+			} else {
+				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
+			}
+
+			session.endDialog('session end.');
+		});
+	}
+)) .triggerAction({
 matches: 'SetupMeeting',
 });
 
@@ -154,33 +212,3 @@ bot.dialog('MeetingSpace', [
 matches: 'MeetingSpace',
 });
 
-
-bot.dialog('/', [].concat(
-	(session, args, next) => {
-		session.send('Hello!');
-		next({});
-	},
-	botAuthenticator.authenticate('outlook'),
-	(session) => {
-		let user = botAuthenticator.profile(session, 'outlook');
-		session.send(`Welcome ${user.displayName}`);
-
-		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
-
-		let client = clients.createJsonClient({
-			url: url.resolve(u, '/'),
-			headers: {
-				Authorization: `Bearer ${user.acessToken}` //actual spelling
-			}
-		});
-		client.get(u.path, (err, req, res, obj) => {
-			if(err) {
-				session.send(`error: ${err}`);
-			} else {
-				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
-			}
-
-			session.endDialog('session end.');
-		});
-	}
-));
