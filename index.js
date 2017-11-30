@@ -112,7 +112,6 @@ bot.dialog('SetupMeeting', [].concat(
 		session.send("data = %s.", data2);
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) {
-			next({});
 			builder.Prompts.confirm(session, "打ち合わせ調整しますか?(yes or no)");
 		}
 		else {
