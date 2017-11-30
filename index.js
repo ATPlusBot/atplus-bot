@@ -103,7 +103,7 @@ item: "no"
 	},
 }
 bot.dialog('SetupMeeting', [].concat(
-/*	function (session, args, next) {
+	function (session, args, next) {
 
 		var meeting = builder.EntityRecognizer.findEntity(args.intent.entities, '会議');
 		session.send("intent = SetupMeeting." );
@@ -112,13 +112,14 @@ bot.dialog('SetupMeeting', [].concat(
 		session.send("data = %s.", data2);
 		// 「場所」エンティティが認識できた場合の処理
 		if (meeting) {
-			builder.Prompts.confirm(session, "打ち合わせ調整しますか?(yes or no)");
+			next({});
+/*			builder.Prompts.confirm(session, "打ち合わせ調整しますか?(yes or no)");*/
 		}
 		else {
 			session.send("error.");
 		}
 	},
-*/	function (session, results,next) {
+/*	function (session, results,next) {
 		var data2 = JSON.stringify(results);
 		session.send("results= %s.", data2);
 
@@ -129,7 +130,7 @@ bot.dialog('SetupMeeting', [].concat(
 			session.send("やめておきましょう!!!");
 		}
 	},
-	botAuthenticator.authenticate('outlook'),
+*/	botAuthenticator.authenticate('outlook'),
 	(session) => {
 		let user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
