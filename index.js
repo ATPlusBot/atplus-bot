@@ -129,6 +129,7 @@ bot.dialog('SetupMeeting', [].concat(
 			session.send("やめておきましょう!!!");
 		}
 	},
+	session.send("authenticate!!!!!!!!!." );
 	botAuthenticator.authenticate('outlook'),
 	(session) => {
 		let user = botAuthenticator.profile(session, 'outlook');
