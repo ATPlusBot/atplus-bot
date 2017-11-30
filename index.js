@@ -49,7 +49,7 @@ botAuthenticator.provider('outlook', (options) => {
 		}
 	);
 });
-
+/*
 bot.dialog('/', [].concat(
 	(session, args, next) => {
 		session.send('Hello!');
@@ -79,7 +79,7 @@ bot.dialog('/', [].concat(
 		});
 	}
 ));
-
+*/
 server.listen(port);
 
 //=========================================================
@@ -123,8 +123,9 @@ bot.dialog('SetupMeeting', [
 
 			if ( results.response == true ){
 				session.send("調整しましょう!!!");
-	botAuthenticator.authenticate('outlook'),
-	(session) => {
+
+
+	botAuthenticator.authenticate('outlook');
 		let user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
 
@@ -145,7 +146,8 @@ bot.dialog('SetupMeeting', [
 
 			session.endDialog('session end.');
 		});
-	}
+
+
 				session.send("場所はどこにしますか？");
 			} else {
 				session.send("やめておきましょう!!!");
