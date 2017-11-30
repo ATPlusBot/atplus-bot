@@ -129,7 +129,7 @@ bot.dialog('SetupMeeting', [].concat(
 			session.send("やめておきましょう!!!");
 		}
 	},
-	session.send("authenticate!!!!!!!!!." );
+	function (session, results) {
 	botAuthenticator.authenticate('outlook'),
 	(session) => {
 		let user = botAuthenticator.profile(session, 'outlook');
@@ -152,6 +152,7 @@ bot.dialog('SetupMeeting', [].concat(
 			}
 				session.endDialog('session end.');
 		});
+	}
 	}
 )).triggerAction({
 matches: 'SetupMeeting',
