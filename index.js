@@ -52,35 +52,35 @@ botAuthenticator.provider('outlook', (options) => {
 	);
 });
 
-bot.dialog('/', [].concat(
-	(session, args, next) => {
-		session.send('Hello!');
-		next({});
-	},
-	botAuthenticator.authenticate('outlook'),
-	(session) => {
-		let user = botAuthenticator.profile(session, 'outlook');
-		session.send(`Welcome ${user.displayName}`);
-
-		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
-
-		let client = clients.createJsonClient({
-			url: url.resolve(u, '/'),
-			headers: {
-				Authorization: `Bearer ${user.acessToken}` //actual spelling
-			}
-		});
-		client.get(u.path, (err, req, res, obj) => {
-			if(err) {
-				session.send(`error: ${err}`);
-			} else {
-				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
-			}
-
-			session.endDialog('session end.');
-		});
-	}
-));
+//bot.dialog('/', [].concat(
+//	(session, args, next) => {
+//		session.send('Hello!');
+//		next({});
+//	},
+//	botAuthenticator.authenticate('outlook'),
+//	(session) => {
+//		let user = botAuthenticator.profile(session, 'outlook');
+//		session.send(`Welcome ${user.displayName}`);
+//
+//		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
+//
+//		let client = clients.createJsonClient({
+//			url: url.resolve(u, '/'),
+//			headers: {
+//				Authorization: `Bearer ${user.acessToken}` //actual spelling
+//			}
+//		});
+//		client.get(u.path, (err, req, res, obj) => {
+//			if(err) {
+//				session.send(`error: ${err}`);
+//			} else {
+//				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
+//			}
+//
+//			session.endDialog('session end.');
+//		});
+//	}
+//));
 
 server.listen(port);
 
@@ -111,8 +111,7 @@ bot.dialog('SetupMeeting', [].concat(
 		var data2 = JSON.stringify(args);
 		session.send("data = %s.", data2);
 		// 「場所」エンティティが認識できた場合の処理
-		if (meeting) 
-		{
+		if (meeting) {
 			builder.Prompts.confirm(session, "打ち合わせ調整しますか?(yes or no)");
 		}
 		else {
@@ -130,20 +129,20 @@ bot.dialog('SetupMeeting', [].concat(
 			session.send("やめておきましょう!!!");
 		}
 	},
-		botAuthenticator.authenticate('outlook'),
-		(session) => {
-			let user = botAuthenticator.profile(session, 'outlook');
-			session.send(`Welcome ${user.displayName}`);
+	botAuthenticator.authenticate('outlook'),
+	(session) => {
+		let user = botAuthenticator.profile(session, 'outlook');
+		session.send(`Welcome ${user.displayName}`);
 
-			let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
+		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
 
-			let client = clients.createJsonClient({
-				url: url.resolve(u, '/'),
-				headers: {
-					Authorization: `Bearer ${user.acessToken}` //actual spelling
-				}
-			});
-			client.get(u.path, (err, req, res, obj) => {
+		let client = clients.createJsonClient({
+			url: url.resolve(u, '/'),
+			headers: {
+				Authorization: `Bearer ${user.acessToken}` //actual spelling
+			}
+		});
+		client.get(u.path, (err, req, res, obj) => {
 			if(err) {
 				session.send(`error: ${err}`);
 			} else {
@@ -151,9 +150,9 @@ bot.dialog('SetupMeeting', [].concat(
 				session.send("場所はどこにしますか？");
 			}
 				session.endDialog('session end.');
-			});
-		}
-)) .triggerAction({
+		});
+	}
+)).triggerAction({
 matches: 'SetupMeeting',
 });
 
