@@ -1,6 +1,6 @@
 'use strict';
 
-const port = process.env.port || process.env.PORT || 3978;
+const localPort = 3978;
 const botURL = 'https://atplus-bot.azurewebsites.net';
 const OUTLOOK_CLIENT_ID = process.env.MICROSOFT_APP_ID;
 const OUTLOOK_CLIENT_SECRET = process.env.MICROSOFT_APP_PASSWORD;
@@ -11,6 +11,8 @@ const clients = require('restify-clients');
 const builder = require('botbuilder');
 const botauth = require('botauth');
 const OutlookStrategy = require('passport-outlook').Strategy;
+
+const port = process.env.port || process.env.PORT || localPort;
 
 const server = restify.createServer();
 server.use(restify.plugins.queryParser({mapParams: false}));
