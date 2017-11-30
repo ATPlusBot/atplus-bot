@@ -127,7 +127,8 @@ bot.dialog('SetupMeeting', [
 				session.send("調整しましょう!!!");
 
 
-		botAuthenticator.authenticate('outlook');
+	botAuthenticator.authenticate('outlook'),
+	(session) => {
 		let user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
 
@@ -144,13 +145,15 @@ bot.dialog('SetupMeeting', [
 				session.send(`error: ${err}`);
 			} else {
 				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
+				session.send("場所はどこにしますか？");
 			}
 
 			session.endDialog('session end.');
 		});
+	}
 
 
-				session.send("場所はどこにしますか？");
+//				session.send("場所はどこにしますか？");
 			} else {
 				session.send("やめておきましょう!!!");
 			}
