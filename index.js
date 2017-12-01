@@ -135,7 +135,7 @@ bot.dialog('SetupMeeting', [].concat(
 				]
 			}
 */
-});
+		});
 		client.post(u.path,{
 			"Attendees": [ 
 /*
@@ -175,7 +175,8 @@ bot.dialog('SetupMeeting', [].concat(
 			if(err) {
 				session.send(`error: ${err}`);
 			} else {
-				session.send(`results: ${JSON.stringify(res)}`);
+				session.send(`results: ${JSON.stringify(res.headers)}`);
+				session.send(`results: ${JSON.stringify(res.statusCode)}`);
 			}
 			session.send("場所はどこにしますか？");
 			session.endDialog();
