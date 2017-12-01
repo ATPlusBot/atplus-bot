@@ -138,6 +138,7 @@ bot.dialog('SetupMeeting', [].concat(
 });
 		client.post(u.path,{
 			"Attendees": [ 
+/*
 			{ 
 			"Type": "Required",  
 			"EmailAddress": { 
@@ -145,15 +146,14 @@ bot.dialog('SetupMeeting', [].concat(
 			"Address": "fxat-YMM-9F-Green_Apple-1@exg01.fxat.co.jp" 
 			} 
 			},
-/*
+*/
 			{ 
 			"Type": "Required",  
 			"EmailAddress": { 
-			"Name": "fxat KINOSHITA TOMOKI",
-			"Address": "tomoki.kinoshita@fxat.co.jp" 
+			"Name": "fxat IMAI TOMOYA",
+			"Address": "tomoya.imai@fxat.co.jp" 
 			} 
 			} 
-*/
 			],
 			"TimeConstraint": { 
 			"ActivityDomain":"Unrestricted",
