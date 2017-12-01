@@ -126,7 +126,10 @@ bot.dialog('SetupMeeting', [].concat(
 		let client = clients.createJsonClient({
 			url: url.resolve(u, '/'),
 			headers: {
-				Authorization: `Bearer ${user.acessToken}` //actual spelling
+				Authorization: `Bearer ${user.acessToken}`, //actual spelling
+				outlook:{
+					timezone: "Tokyo Standard Time"
+				}
 			}
 /*
 			headers: {
