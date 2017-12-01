@@ -125,13 +125,14 @@ bot.dialog('SetupMeeting', [].concat(
 		let u = url.parse('https://outlook.office.com/api/v2.0/me/findmeetingtimes');
 		let client = clients.createJsonClient({
 			url: url.resolve(u, '/'),
-
+/*
 			headers: {
 				outlook:[
 					timezone = "Tokyo Standard Time"
 				]
 			}
-		});
+*/
+});
 		client.post(u.path,{
 			"Attendees": [ 
 			{ 
