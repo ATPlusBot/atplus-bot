@@ -179,6 +179,7 @@ bot.dialog('SetupMeeting', [].concat(
 				console.log(`results: ${JSON.stringify(res.headers)}`);
 				console.log(`results: ${JSON.stringify(res.statusCode)}`);
 				console.log(`results: ${JSON.stringify(obj)}`);
+				session.send(`last mail: ${JSON.stringify(obj.MeetingTimeSuggestions)}`);
 			}
 			session.send("場所はどこにしますか？");
 			session.endDialog();
