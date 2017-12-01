@@ -34,7 +34,7 @@ const botAuthenticator = new botauth.BotAuthenticator(server, bot, {
 		'profile',
 		'offline_access',
 		'https://outlook.office.com/Mail.Read',
-		'https://outlook.office.com/calendars.read',
+		'https://outlook.office.com/calendars.readwrite',
 		'https://outlook.office.com/calendars.read.shared'
 	]
 });
@@ -55,6 +55,9 @@ botAuthenticator.provider('outlook', (options) => {
 });
 
 server.listen(port);
+
+//認証権限
+let user;
 
 //=========================================================
 // IntentDialogオブジェクトの用意
@@ -103,87 +106,11 @@ bot.dialog('SetupMeeting', [].concat(
 	},
 	botAuthenticator.authenticate('outlook'),
 	(session) => {
-		let user = botAuthenticator.profile(session, 'outlook');
+		user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
 
-/*
-		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
-
-		let client = clients.createJsonClient({
-			url: url.resolve(u, '/'),
-			headers: {
-				Authorization: `Bearer ${user.acessToken}` //actual spelling
-			}
-		});
-		client.get(u.path, (err, req, res, obj) => {
-			if(err) {
-				session.send(`error: ${err}`);
-			} else {
-				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
-			}
-*/
-		let u = url.parse('https://outlook.office.com/api/v2.0/me/findmeetingtimes');
-		let client = clients.createJsonClient({
-			url: url.resolve(u, '/'),
-			headers: {
-				Authorization: `Bearer ${user.acessToken}`, //actual spelling
-				Prefer: `outlook.timezone="Tokyo Standard Time"`
-			}
-/*
-			headers: {
-				outlook:[
-					timezone = "Tokyo Standard Time"
-				]
-			}
-*/
-		});
-		client.post(u.path,{
-			"Attendees": [ 
-/*
-			{ 
-			"Type": "Required",  
-			"EmailAddress": { 
-			"Name": "fxat-YMM-9F-Green_Apple-1",
-			"Address": "fxat-YMM-9F-Green_Apple-1@exg01.fxat.co.jp" 
-			} 
-			},
-*/
-			{ 
-			"Type": "Required",  
-			"EmailAddress": { 
-			"Name": "fxat IMAI TOMOYA",
-			"Address": "tomoya.imai@fxat.co.jp" 
-			} 
-			} 
-			],
-			"TimeConstraint": { 
-			"ActivityDomain":"Unrestricted",
-			"Timeslots": [ 
-			{ 
-				"Start": { 
-					"DateTime": "2017-10-30T09:00:00",  
-					"TimeZone": "Tokyo Standard Time" 
-				},  
-				"End": { 
-					"DateTime": "2017-10-30T17:00:00",  
-					"TimeZone": "Tokyo Standard Time" 
-				} 
-			} 
-			] 
-			},  
-			"MeetingDuration": "PT1H" 
-		}, (err, req, res, obj) => {
-			if(err) {
-				session.send(`error: ${err}`);
-			} else {
-				console.log(`results: ${JSON.stringify(res.headers)}`);
-				console.log(`results: ${JSON.stringify(res.statusCode)}`);
-				console.log(`results: ${JSON.stringify(obj)}`);
-				session.send(`last mail: ${JSON.stringify(obj.MeetingTimeSuggestions)}`);
-			}
-			session.send("場所はどこにしますか？");
-			session.endDialog();
-		});
+		session.send("場所はどこにしますか？");
+		session.endDialog();
 	}
 )).triggerAction({
 matches: 'SetupMeeting',
@@ -223,7 +150,95 @@ bot.dialog('MeetingSpace', [
 			}
 		},
 		function (session, results) {
-			session.send("参加者は、 %s. ですね?", results.response);
+			session.send("参加者は、 %s. ですね.予定を確認します。", results.response);
+
+			//予定確認処理
+			let u = url.parse('https://outlook.office.com/api/v2.0/me/findmeetingtimes');
+			let client = clients.createJsonClient({
+				url: url.resolve(u, '/'),
+				headers: {
+					Authorization: `Bearer ${user.acessToken}`, //actual spelling
+					Prefer: `outlook.timezone="Tokyo Standard Time"`
+				}
+			});
+			client.post(u.path,{
+				"Attendees": [ 
+				{ 
+				"Type": "Required",  
+				"EmailAddress": { 
+				"Name": "fxat IMAI TOMOYA",
+				"Address": "tomoya.imai@fxat.co.jp" 
+				} 
+				} 
+				],
+				"TimeConstraint": { 
+				"ActivityDomain":"Unrestricted",
+				"Timeslots": [ 
+				{ 
+					"Start": { 
+						"DateTime": "2017-10-30T09:00:00",  
+						"TimeZone": "Tokyo Standard Time" 
+					},  
+					"End": { 
+						"DateTime": "2017-10-30T17:00:00",  
+						"TimeZone": "Tokyo Standard Time" 
+					} 
+				} 
+				] 
+				},  
+				"MeetingDuration": "PT1H" 
+			}, (err, req, res, obj) => {
+				if(err) {
+					session.send(`error: ${err}`);
+				} else {
+					console.log(`results: ${JSON.stringify(res.headers)}`);
+					console.log(`results: ${JSON.stringify(res.statusCode)}`);
+					console.log(`results: ${JSON.stringify(obj)}`);
+					session.send(`last mail: ${JSON.stringify(obj.MeetingTimeSuggestions)}`);
+				}
+			});
+
+			//メール送信
+			let u2 = url.parse('https://outlook.office.com/api/v2.0/me/events');
+			let client2 = clients.createJsonClient({
+				url: url.resolve(u2, '/'),
+				headers: {
+					Authorization: `Bearer ${user.acessToken}`, //actual spelling
+				}
+			});
+			client2.post(u2.path,{
+				"Subject": "REST API events 01",
+				"Body": {
+					"ContentType": "HTML",
+					"Content": "I think it will meet our requirements!"
+				},
+				"Start": {
+					"DateTime": "2017-12-3T10:00:00",
+					"TimeZone": "Tokyo Standard Time"
+				},
+				"End": {
+					"DateTime": "2017-12-3T11:00:00",
+					"TimeZone": "Tokyo Standard Time"
+				},
+				"Attendees": [
+					{
+						"EmailAddress": {
+						"Address": "tomoya.imai@fxat.co.jp", 
+						"Name": "fxat IMAI TOMOYA"
+					},
+						"Type": "Required"
+					}
+				]
+			}, (err, req, res, obj) => {
+				if(err) {
+					session.send(`error: ${err}`);
+				} else {
+					console.log(`results: ${JSON.stringify(res.headers)}`);
+					console.log(`results: ${JSON.stringify(res.statusCode)}`);
+					console.log(`results: ${JSON.stringify(obj)}`);
+					session.send("送信しました.");
+				}
+			});
 			// End
 			session.endDialog();
 		}
