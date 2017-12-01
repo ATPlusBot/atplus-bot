@@ -194,7 +194,7 @@ bot.dialog('MeetingSpace', [
 					console.log(`results: ${JSON.stringify(res.headers)}`);
 					console.log(`results: ${JSON.stringify(res.statusCode)}`);
 					console.log(`results: ${JSON.stringify(obj)}`);
-					session.send(`last mail: ${JSON.stringify(obj.MeetingTimeSuggestions)}`);
+					session.send(`results: ${JSON.stringify(obj.MeetingTimeSuggestions)}`);
 				}
 			});
 
