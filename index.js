@@ -125,6 +125,9 @@ bot.dialog('SetupMeeting', [].concat(
 		let u = url.parse('https://outlook.office.com/api/v2.0/me/findmeetingtimes');
 		let client = clients.createJsonClient({
 			url: url.resolve(u, '/'),
+			headers: {
+				Authorization: `Bearer ${user.acessToken}` //actual spelling
+			}
 /*
 			headers: {
 				outlook:[
