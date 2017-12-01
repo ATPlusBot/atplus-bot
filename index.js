@@ -127,11 +127,7 @@ bot.dialog('SetupMeeting', [].concat(
 			url: url.resolve(u, '/'),
 			headers: {
 				Authorization: `Bearer ${user.acessToken}`, //actual spelling
-				Prefer:{
-					outlook:{
-						timezone: "Tokyo Standard Time"
-					}
-				}
+				Prefer: `outlook.timezone="Tokyo Standard Time"`
 			}
 /*
 			headers: {
