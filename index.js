@@ -33,7 +33,9 @@ const botAuthenticator = new botauth.BotAuthenticator(server, bot, {
 		'openid',
 		'profile',
 		'offline_access',
-		'https://outlook.office.com/Mail.Read'
+		'https://outlook.office.com/Mail.Read',
+		'https://outlook.office.com/calendars.read',
+		'https://outlook.office.com/calendars.read.shared'
 	]
 });
 
@@ -104,6 +106,7 @@ bot.dialog('SetupMeeting', [].concat(
 		let user = botAuthenticator.profile(session, 'outlook');
 		session.send(`Welcome ${user.displayName}`);
 
+/*
 		let u = url.parse('https://outlook.office.com/api/v2.0/me/messages');
 
 		let client = clients.createJsonClient({
@@ -117,9 +120,59 @@ bot.dialog('SetupMeeting', [].concat(
 				session.send(`error: ${err}`);
 			} else {
 				session.send(`last mail: ${JSON.stringify(obj.value[0])}`);
-				session.send("場所はどこにしますか？");
 			}
-				session.endDialog();
+*/
+		let u = url.parse('https://outlook.office.com/api/v2.0/me/findmeetingtimes');
+		let client = clients.createJsonClient({
+			url: url.resolve(u, '/'),
+
+			headers: {
+				outlook:[
+					timezone = "Tokyo Standard Time"
+				]
+			}
+		});
+		client.post(u.path,{
+			"Attendees": [ 
+			{ 
+			"Type": "Required",  
+			"EmailAddress": { 
+			"Name": "fxat-YMM-9F-Green_Apple-1",
+			"Address": "fxat-YMM-9F-Green_Apple-1@exg01.fxat.co.jp" 
+			} 
+			}, 
+			{ 
+			"Type": "Required",  
+			"EmailAddress": { 
+			"Name": "fxat KINOSHITA TOMOKI",
+			"Address": "tomoki.kinoshita@fxat.co.jp" 
+			} 
+			} 
+			],  
+			"TimeConstraint": { 
+			"ActivityDomain":"Unrestricted",
+			"Timeslots": [ 
+			{ 
+				"Start": { 
+					"DateTime": "2017-10-30T09:00:00",  
+					"TimeZone": "Tokyo Standard Time" 
+				},  
+				"End": { 
+					"DateTime": "2017-10-30T17:00:00",  
+					"TimeZone": "Tokyo Standard Time" 
+				} 
+			} 
+			] 
+			},  
+			"MeetingDuration": "PT1H" 
+		}, (err, req, res, obj) => {
+			if(err) {
+				session.send(`error: ${err}`);
+			} else {
+				session.send(`results: ${JSON.stringify(obj.value[0])}`);
+			}
+			session.send("場所はどこにしますか？");
+			session.endDialog();
 		});
 	}
 )).triggerAction({
