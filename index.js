@@ -126,7 +126,7 @@ bot.dialog('SetupMeeting', [].concat(
 		let client = clients.createJsonClient({
 			url: url.resolve(u, '/'),
 			headers: {
-				Authorization: `Bearer ${user.acessToken}` //actual spelling
+				Authorization: `Bearer ${user.acessToken}`, //actual spelling
 			}
 /*
 			headers: {
@@ -175,7 +175,7 @@ bot.dialog('SetupMeeting', [].concat(
 			if(err) {
 				session.send(`error: ${err}`);
 			} else {
-				session.send(`results: ${JSON.stringify(obj)}`);
+				session.send(`results: ${JSON.stringify(res)}`);
 			}
 			session.send("場所はどこにしますか？");
 			session.endDialog();
