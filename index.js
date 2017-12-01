@@ -140,7 +140,8 @@ bot.dialog('SetupMeeting', [].concat(
 			"Name": "fxat-YMM-9F-Green_Apple-1",
 			"Address": "fxat-YMM-9F-Green_Apple-1@exg01.fxat.co.jp" 
 			} 
-			}, 
+			},
+/*
 			{ 
 			"Type": "Required",  
 			"EmailAddress": { 
@@ -148,7 +149,8 @@ bot.dialog('SetupMeeting', [].concat(
 			"Address": "tomoki.kinoshita@fxat.co.jp" 
 			} 
 			} 
-			],  
+*/
+			],
 			"TimeConstraint": { 
 			"ActivityDomain":"Unrestricted",
 			"Timeslots": [ 
@@ -169,7 +171,7 @@ bot.dialog('SetupMeeting', [].concat(
 			if(err) {
 				session.send(`error: ${err}`);
 			} else {
-				session.send(`results: ${JSON.stringify(obj.value[0])}`);
+				session.send(`results: ${JSON.stringify(obj)}`);
 			}
 			session.send("場所はどこにしますか？");
 			session.endDialog();
