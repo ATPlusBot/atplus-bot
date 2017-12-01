@@ -198,12 +198,12 @@ bot.dialog('MeetingSpace', [
 				}
 			});
 
-			//メール送信
+/*			//メール送信(今井君に依頼メールが毎回飛ぶためコメントアウト)
 			let u2 = url.parse('https://outlook.office.com/api/v2.0/me/events');
 			let client2 = clients.createJsonClient({
 				url: url.resolve(u2, '/'),
 				headers: {
-					Authorization: `Bearer ${user.acessToken}`, //actual spelling
+					Authorization: `Bearer ${user.acessToken}` //actual spelling
 				}
 			});
 			client2.post(u2.path,{
@@ -239,6 +239,7 @@ bot.dialog('MeetingSpace', [
 					session.send("送信しました.");
 				}
 			});
+*/
 			// End
 			session.endDialog();
 		}
